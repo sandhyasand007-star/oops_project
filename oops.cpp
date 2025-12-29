@@ -145,7 +145,7 @@ public:
                 string color = (tr.type == "Income") ? "#28a745" : (tr.type == "Saving" ? "#007bff" : "#dc3545");
                 cout << "<tr><td>" << tr.date << " <small>(" << tr.timeStr << ")</small></td><td>" << tr.type << "</td><td>" << tr.category << "</td><td>" << cleanDesc 
                      << "</td><td style='color:" << color << "; font-weight:bold;'>" << tr.amount << "</td>"
-                     << "<td><a href='/cgi-bin/tracker.cgi?delete=" << tr.id << "' class='del-btn'>Delete</a></td></tr>";
+                     << "<td><a href='/tracker.cgi?delete=" << tr.id << "' class='del-btn'>Delete</a></td></tr>";
             }
         }
         cout << "</table>";
@@ -158,7 +158,7 @@ public:
              << "plugins:[ChartDataLabels],options:{plugins:{datalabels:{formatter:(val,ctx)=>{"
              << "let sum=0;let data=ctx.chart.data.datasets[0].data;data.map(d=>sum+=d);"
              << "return sum>0?((val*100)/sum).toFixed(1)+'%':'0%';},color:'#fff',font:{weight:'bold'}}}}});</script>"
-             << "<br><center><a href='/TRACK/oops.html' style='font-weight:bold; color:#28a745; text-decoration:none;'>+ Add New Entry / Set Budget</a></center></div></body></html>";
+             << "<br><center><a href='/oops.html' style='font-weight:bold; color:#28a745; text-decoration:none;'>+ Add New Entry / Set Budget</a></center></div></body></html>";
     }
 };
 
@@ -193,4 +193,5 @@ int main() {
     myTracker.loadData();
     myTracker.displayDashboard();
     return 0;
+
 }
