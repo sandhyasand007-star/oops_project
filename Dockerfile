@@ -1,18 +1,18 @@
-# Use a C++ build environment
-FROM gcc:latest
+# Use a lightweight server that supports CGI
+FROM alpine:latest
 
-# Install a web library (example using Crow dependencies)
-RUN apt-get update && apt-get install -y libasio-dev
+# Install C++ compiler and a small web server
+RUN apk add --no-network --no-cache g++ make apache2-utils thttpd
 
-# Copy your code into the container
-COPY . /usr/src/myapp
-WORKDIR /usr/src/myapp
+# Create a folder for your app
+WORKDIR /app
 
-# Compile your C++ code
-RUN g++ oops.cpp -lpthread -o my_backend
+# Copy all your files (oops.cpp, oops.html)
+COPY . .
 
-# Tell the cloud which port to use
-EXPOSE 8080
+# Compile your C++ code into a "CGI" executable
+RUN g++ oops.cpp -o tracker.cgi
 
-# Run the backend
-CMD ["./my_backend"]
+# Run a mini web server on port 8080
+# It will serve oops.html and run tracker.cgi
+CMD ["thttpd", "-D", "-p", "8080", "-d", "/app", "-c", "**.cgi"]
